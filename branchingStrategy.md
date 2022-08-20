@@ -3,3 +3,4 @@
 3. make changes in feature branch and commit
 4. raise PR (pull request) wrt master branch
 5. once PR is approved and completed, changes would be present in master
+6. pull master so latest changes are present on local
