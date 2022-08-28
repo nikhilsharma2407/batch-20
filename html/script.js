@@ -4,7 +4,7 @@
 // not hoised it'd be in TDZ 
 
 var abc = "global var"
-function fn(){
+function fn1(){
     console.log(username);
     
     if(true){
@@ -18,7 +18,7 @@ function fn(){
 }
 
 
-fn()
+fn1()
 // console.log(username);
 
 const PI = 3.14
@@ -88,7 +88,30 @@ const student2 = student;
 
 student.name = "Nikhil";
 console.log(student2.name);
-a++;b++;c++
+// a++;b++;c++
 // console.log(student.id,student.name);
+
+
+
+let key = 'name';
+
+
+
+
+
+function add(num1,num2){
+    return num1+num2;
+};
+
+const addArrowFn = (num1,num2)=>num1+num2
+
+const fn = (secondFn)=>{
+    console.log("wrapper fn");
+    secondFn();
+}
+
+const myFn = ()=>{console.log("callback Fn");}
+fn(()=>{console.log("Callback Arrow Fn")});
+fn(myFn);
 
 
