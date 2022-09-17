@@ -4,11 +4,16 @@ import User from '../User/User';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
+import {useSearchParams} from "react-router-dom"
+
 function Users(props) {
     const URL = 'https://dummyapi.io/data/v1/user?limit=10';
     const APP_HEADER = '623f19872934031e5b0d8089';
 
     const [users, setUsers] = useState([]);
+    const [searchQuery] = useSearchParams();
+
+    console.log('searchQuery',searchQuery.get('user'));
     useEffect(() => {
 
         (async () => {
@@ -20,11 +25,15 @@ function Users(props) {
     }, []);
 
 
+    const search=(user)=>{
+        const name = (user.firstName + user.lastName).toLowerCase();
+        return  name.includes(searchQuery.get('user'));
+    }
     
     return (
         <Container>
             <Row>
-                {users.map(user=><User key={user.key} user = {user}/>)}
+                {users.filter(search).map((user)=><User key={user.key} user = {user}/>)}
             </Row>
             {/* {users.map(({picture,firstName,lastName,id})=>{
                 // const {picture,firstName,lastName,id} = user;
