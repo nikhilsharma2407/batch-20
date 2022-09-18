@@ -15,6 +15,7 @@ import {
 // our component
 import Routing from './Routing/Routing';
 import MyNavbar from './MyNavbar/MyNavbar';
+import Signup from './Signup/Signup';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
       }/>
       <Route path='/flex' element={<Flexbox/>}/>
       <Route path='/router/:category/:userId' element={<Routing/>}/>
+      <Route path='/signup' element={<Signup/>}/>
     </Routes>
     
     </BrowserRouter>
