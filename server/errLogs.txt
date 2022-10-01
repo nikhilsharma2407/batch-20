@@ -1,0 +1,5 @@
+Incorrect Password!!! /user/login POST
+Incorrect Password!!! /user/login POST Sat Oct 01 2022 22:21:09 GMT+0530 (India Standard Time)
+users validation failed: name: name is mandatory!!! /user/signup POST Sat Oct 01 2022 22:25:32 GMT+0530 (India Standard Time)
+E11000 duplicate key error collection: test.users index: username_1 dup key: { username: "nikhil123" } /user/signup POST Sat Oct 01 2022 22:25:44 GMT+0530 (India Standard Time)
+users validation failed: password: Password should be atleast 8 characters long /user/signup POST Sat Oct 01 2022 22:25:57 GMT+0530 (India Standard Time)
