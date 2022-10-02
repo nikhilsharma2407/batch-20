@@ -8,6 +8,7 @@ const userModel = require("../models/userModel");
 
 router.post('/signup',UserModel.signup);
 router.post('/login',UserModel.login);
+router.get('/login',UserModel.loginWithToken);
 
 
 module.exports = router;
