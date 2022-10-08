@@ -4,7 +4,12 @@ const errLogger = (err,req,res,next)=>{
     const {path,method} = req;
     const timestamp = new Date();
 
-    console.log("errLogger",err.stack);
+    console.log("errLogger",err);
+    
+    if(err.stack.includes("TokenExpiredError")){
+        err.message = "Please login again to continue!!!"
+    };
+
     const data = `${err.message} ${path} ${method} ${timestamp}\n`
     console.log("errorLogger",data);
     fs.appendFile('./errLogs.txt',data,(logerr)=>{

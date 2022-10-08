@@ -1,6 +1,6 @@
 const {sign,verify} = require("jsonwebtoken");
 
-const SECRET_KEY = "MySecretTOKENkey";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 
 const generateToken = (data,options = {expiresIn:"15m"})=>{

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { generateToken, verifyToken } = require('../utils/jwtUtil');
 const { generatePasswordHash, verifyPassword } = require('../utils/pwdUtil');
+const { ResponseCreator, ErrorCreator } = require('../utils/responseHandler');
 const { Schema } = mongoose;
 
 const verifyTokenFromHeader = (req)=>{
@@ -32,6 +33,15 @@ const userSchema = new Schema({
             message: props => `Password should be atleast 8 characters long`
         },
         required: [true, "password is mandatory!!!"]
+    },
+    friendList:{
+        type: [String]
+    },
+    otp:{
+        type:Number
+    },
+    timestamp:{
+        type:Number
     }
 });
 
@@ -108,6 +118,7 @@ userSchema.statics.authMiddleware  = async (req,res,next)=>{
         next(error);
     }
 }
+
 userSchema.statics.loginWithToken = async(req, res, next) => {
     try {
         const userData = verifyTokenFromHeader(req);
@@ -130,6 +141,64 @@ userSchema.statics.loginWithToken = async(req, res, next) => {
     }
     
 };
+
+userSchema.statics.addFriend = async(req,res,next)=>{
+    try {
+        const {id,name} = req.body;
+        const {username} = req.user
+        const data = await UserModel.updateOne({username},{$push:{friendList:id}});
+        console.log(data);
+        if(data.modifiedCount){
+            res.send({success:true,message:`You're now friends with ${name}`});
+        }
+        else{
+            ErrorCreator('Something went wrong');
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+userSchema.statics.removeFriend = async(req,res,next)=>{
+    try {
+        const {id,name} = req.body;
+        const {username} = req.user
+        const data = await UserModel.updateOne({username},{$pull:{friendList:id}});
+        console.log(data);
+        if(data.modifiedCount){
+            res.send(ResponseCreator(true,`You're no longer friends with ${name}`));
+        }else{
+            ErrorCreator('Something went wrong');
+        }
+    } catch (error) {
+        next(error)
+    }
+};
+
+userSchema.statics.generateOTP = async (req,res,next)=>{
+    // if random is <.2 then we would get 5 digit number
+    const otp = Math.floor(100000+Math.random()*9_00_000);
+    const timestamp = Date.now();
+    try {
+        const {username} = req.body;
+
+        const data = await UserModel.updateOne({username},{$set:{otp,timestamp}});
+        if (data.modifiedCount){
+            res.send(new ResponseCreator(true,`Your OTP for resetting password is ${otp}`));
+        }else{
+            ErrorCreator('Something went wrong while generating OTP');
+        }    
+    } catch (error) {
+        next(error);
+    }
+    // save it into DB along with the timestamp;
+
+};
+
+userSchema.statics.resetPassword = async (req,res,next)=>{
+    // if random is <.2 then we would get 5 digit number
+    // const otp = Math.floor(100000+Math.random()*9_00_000);
+}
 
 
 // UserModel we're going to use for interacting with db

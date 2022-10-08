@@ -27,7 +27,8 @@ function Users(props) {
 
     const search=(user)=>{
         const name = (user.firstName + user.lastName).toLowerCase();
-        return  name.includes(searchQuery.get('user'));
+        const query = searchQuery.get('user');
+        return  query===null || name.includes(searchQuery.get('user'));
     }
     
     return (

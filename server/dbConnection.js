@@ -1,10 +1,10 @@
 // getting-started.js
 const mongoose = require('mongoose');
 
-
+const DB_URL = process.env.DB_URL;
 (async()=>{
     try {
-        await mongoose.connect('mongodb+srv://admin:admin@cluster0.h8e10kb.mongodb.net/test');
+        await mongoose.connect(DB_URL);
         console.log('Connected to DB successfully!!!');
     } catch (error) {
         console.log(error);
