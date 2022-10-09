@@ -7,8 +7,10 @@ const router = express.Router();
 router.post('/signup',UserModel.signup);
 router.post('/login',UserModel.login);
 router.get('/login',UserModel.loginWithToken);
-router.post('/addFriend',UserModel.authMiddleware,UserModel.addFriend);
-router.post('/removeFriend',UserModel.authMiddleware,UserModel.removeFriend);
+router.patch('/addFriend',UserModel.authMiddleware,UserModel.addFriend);
+router.patch('/removeFriend',UserModel.authMiddleware,UserModel.removeFriend);
+router.patch('/generateOTP',UserModel.generateOTP);
+router.patch('/resetPassword',UserModel.resetPassword);
 
 
 module.exports = router;

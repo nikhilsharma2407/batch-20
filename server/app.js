@@ -15,6 +15,12 @@ const errLogger = require("./utils/errLogger")
 
 const port = 5000;
 
+const cors = require("cors");
+const corsOptions  = {
+    "origin":"http://localhost:3000",
+    "methods": "GET,HEAD,PUT,PATCH,POST",
+}
+app.use(cors(corsOptions));
 // parsing the request body
 app.use(express.json());
 

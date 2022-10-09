@@ -196,9 +196,50 @@ userSchema.statics.generateOTP = async (req,res,next)=>{
 };
 
 userSchema.statics.resetPassword = async (req,res,next)=>{
-    // if random is <.2 then we would get 5 digit number
-    // const otp = Math.floor(100000+Math.random()*9_00_000);
-}
+    /**
+     *  1. validation of OTP -
+     *      1.1 check if otp is correct and within the timeframe.
+     *      1.2 invalidate the existing otp post verification - 
+     *          set the otp to null and timestamp to 0
+        2. if valid:
+            allow user to set new password
+            save the new password in db
+     */
+    // username
+    try {
+        const {username,otp,password} = req.body;
+        const currentTime = Date.now();
+        const data = await UserModel.findOne({username,otp},{timestamp:1});
+        if(data){
+            console.log(data);
+            // milliseconds
+            const timeDifference = (currentTime - data.timestamp)/1000
+            if (timeDifference<=180 ){
+                const passwordHash = await generatePasswordHash(password);
+                // search query, update
+                const updateData = await UserModel.updateOne({username},{$set:{
+                    password:passwordHash,
+                    otp:null,
+                    timestamp:0
+                }});
+                console.log({updateData});
+                if (updateData.modifiedCount){
+                    res.status(204);
+                    res.send(new ResponseCreator(true,`password updated successfully for ${username}`))
+                }else{
+                    ErrorCreator('Something went wrong while updating password!!!',500);
+                }
+            }else{
+                ErrorCreator('OTP Expired!!!, please try again',403)
+            }
+        }else{
+            ErrorCreator('Invalid OTP',403);
+        }
+
+    } catch (error) {
+        next(error)
+    }
+};
 
 
 // UserModel we're going to use for interacting with db

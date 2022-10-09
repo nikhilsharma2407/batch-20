@@ -1,5 +1,6 @@
 import { Button, Form, Container, Row, Col,Card } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react'
+import { signupUtil } from '../apiUtil';
 
 
 function Signup() {
@@ -16,10 +17,15 @@ function Signup() {
 
     const { lowercase, uppercase, number, symbol, length } = pwdValidation;
 
+    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [name, setName] = useState("");
+
     useEffect(() => {
         const isPwdValid = Object.values(pwdValidation).every(Boolean);
         console.log(isPwdValid);
         setIsValid(isPwdValid);
+        console.log({isValid});
     }, [setPwdValidation])
 
 
@@ -33,7 +39,21 @@ function Signup() {
         const number = /(?=.*\d)/.test(password);
         const symbol = /(?=.*[\W_])/.test(password);
         const length = password.length >= 8;
+        setPassword(password)
         setPwdValidation({ lowercase, uppercase, number, symbol, length });
+    }
+
+    const signUp = async(e)=>{
+        const payload = {name,username,password};
+        try {
+            const data  = await (await signupUtil(payload)).data;
+            console.log(data);
+            if(data){
+                alert("user signup successful" );
+            } 
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -43,23 +63,21 @@ function Signup() {
                     <Card className="mt-3 p-3 signup">
                         <Card.Title>Signup</Card.Title>
                         <Card.Body>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                </Form.Text>
+                            <Form.Group className="mb-3" controlId="formBasicEmail" onChange={e=>setName(e.target.value)}>
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control  placeholder="Enter name" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="username">
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control  placeholder="Enter username" onChange={e=>setUsername(e.target.value)} />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Control type="password" onChange={validatePasword} placeholder="Password" />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Check me out" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Submit
+                            <Button variant="primary" onClick={signUp} type="submit" disabled = {!isValid}>
+                                Signup
                             </Button>
                         </Card.Body>
                         <div className='pwd-strength'>
