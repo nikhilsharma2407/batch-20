@@ -76,7 +76,7 @@ userSchema.statics.login = async (req, res, next) => {
             if (passwordVerified) {
                 // user is authenticated successfully!!!
                 const token = generateToken({username:data.username,name:data.name});
-                res.send({ success: true, data:{username:data.username,name:data.name,token}, message: `${username} logged in successfully!!` });
+                res.send({ success: true, data:{username:data.username,name:data.name,token,friendList:data.friendList}, message: `${username} logged in successfully!!` });
             } else {
                 const err = new Error("Incorrect Password!!!");
                 err.status = 403;
@@ -127,7 +127,8 @@ userSchema.statics.loginWithToken = async(req, res, next) => {
         console.log(data);
         if (data) {
             // user exists
-                res.send({ success: true, data:{username:data.username,name:data.name}, message: `${username} logged in successfully!!! with token` });
+            res.send({ success: true, data:{username:data.username,name:data.name,friendList:data.friendList}, message: `${username} logged in successfully with token!!` });
+
         } else {
             const err = new Error("user does not exist!!!");
             err.status = 404;

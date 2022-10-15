@@ -25,6 +25,7 @@ function MyNavbar() {
             <Nav.Link as={Link}  to="/">Home</Nav.Link>
             <Nav.Link as={Link}  to="/flex">Flexbox</Nav.Link>
             <Nav.Link as={Link}  to="/router">Routing</Nav.Link>
+            <Nav.Link as={Link}  to="/counter">Counter</Nav.Link>
             <Nav.Link as={Link}  to="/login">login</Nav.Link>
             <Nav.Link as={Link}  to="/signup">signup</Nav.Link>
           </Nav>

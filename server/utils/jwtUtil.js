@@ -3,7 +3,7 @@ const {sign,verify} = require("jsonwebtoken");
 const SECRET_KEY = process.env.SECRET_KEY;
 
 
-const generateToken = (data,options = {expiresIn:"15m"})=>{
+const generateToken = (data,options = {expiresIn:"1h"})=>{
     const token = sign(data,SECRET_KEY,options);
     console.log(token);
     return token
