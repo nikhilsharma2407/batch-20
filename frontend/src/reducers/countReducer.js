@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const initialState = {
   count: 0
 };
@@ -40,8 +38,7 @@ export const countReducer = (state = initialState, action) => {
 
     case ACTIONS.DECREMENT:
       return { ...state, count: state.count - payload };
-
     default:
-      return initialState
+      return state
   }
 }

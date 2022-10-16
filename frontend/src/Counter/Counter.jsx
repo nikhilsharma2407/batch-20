@@ -6,7 +6,7 @@ import { decrementActionCreator, incrementActionAsync, incrementActionCreator } 
 
 function Counter() {
     const [value, setValue] = useState(1)
-    const {count} =  useSelector(state=>state);
+    const {count} =  useSelector(state=>state.counter);
     const dispatch = useDispatch();
     
     const incrementCount = ()=>{

@@ -147,7 +147,7 @@ userSchema.statics.addFriend = async(req,res,next)=>{
     try {
         const {id,name} = req.body;
         const {username} = req.user
-        const data = await UserModel.updateOne({username},{$push:{friendList:id}});
+        const data = await UserModel.updateOne({username},{$addToSet:{friendList:id}});
         console.log(data);
         if(data.modifiedCount){
             res.send({success:true,message:`You're now friends with ${name}`});
@@ -167,7 +167,7 @@ userSchema.statics.removeFriend = async(req,res,next)=>{
         const data = await UserModel.updateOne({username},{$pull:{friendList:id}});
         console.log(data);
         if(data.modifiedCount){
-            res.send(ResponseCreator(true,`You're no longer friends with ${name}`));
+            res.send(new ResponseCreator(true,`You're no longer friends with ${name}`));
         }else{
             ErrorCreator('Something went wrong');
         }

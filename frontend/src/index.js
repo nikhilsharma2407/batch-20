@@ -3,12 +3,20 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider, useDispatch } from "react-redux"
+import { rootReducer } from './reducers/rootReducer';
+import logger from 'redux-logger';
+import thunk from "redux-thunk";
+import { applyMiddleware, createStore } from 'redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const store = createStore(rootReducer, applyMiddleware(logger,thunk))
+
 root.render(
-  <>
+  <Provider store={store}>
     <App />
-  </>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

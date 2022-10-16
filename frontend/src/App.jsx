@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import UserClass from './UsersClass/UserClass';
 import { useEffect, useState } from 'react';
 import Users from './Users/Users';
 import Flexbox from './Flexbox/Flexbox';
@@ -8,9 +6,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import {
   BrowserRouter,
   Routes,
-  Route,
-  Link
-} from "react-router-dom";
+  Route} from "react-router-dom";
 
 // our component
 import Routing from './Routing/Routing';
@@ -21,23 +17,21 @@ import { loginWithTokenUtil } from './apiUtil';
 
 // Redux 
 
-import { applyMiddleware, createStore } from 'redux';
-import { Provider, useSelector } from "react-redux"
-import logger from "redux-logger"
 import Counter from './Counter/Counter';
-import { countReducer } from './reducers/countReducer';
-import thunk from 'redux-thunk';
+import { useDispatch } from 'react-redux';
+import { loginAction } from './reducers/userReducer';
 
 
 function App() {
   const [showComponent, setShowComponent] = useState(true);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
       try {
         const userData = await (await loginWithTokenUtil()).data;
         console.log(userData);
         if (userData) {
+          dispatch(loginAction(userData));
           alert(`${userData.data.username} logged in successfully without credentials!!!`);
           console.log(userData);
           // localStorage.setItem('token',userData.data.token);
@@ -53,12 +47,10 @@ function App() {
   const name = "Nikhil";
 
   // redux Setup
-  const store = createStore(countReducer, applyMiddleware(logger,thunk))
 
 
   return (
     <>
-      <Provider store={store}>
         <BrowserRouter>
           <MyNavbar />
           {/* <div className='d-flex justify-content-around'>
@@ -87,7 +79,6 @@ function App() {
           </Routes>
 
         </BrowserRouter>
-      </Provider>
     </>
   );
 }
