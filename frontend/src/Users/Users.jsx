@@ -32,7 +32,7 @@ function Users(props) {
     }
     
     return (
-        <Container>
+        <Container fluid>
             <Row>
                 {users.filter(search).map((user)=><User key={user.key} user = {user}/>)}
             </Row>

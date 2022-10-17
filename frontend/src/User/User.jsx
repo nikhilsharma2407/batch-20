@@ -42,7 +42,7 @@ function User(props) {
             alert(error.response.data.message);
         }
     }
-    return <Col lg={4} md={6} sm={12} className="mb-3">
+    return <Col xl = {2} lg={4} md={6} sm={12} className="mb-3">
         <Card className='user'>
             <Card.Body className='d-flex justify-content-around'>
                 <img src={picture} alt="" />
