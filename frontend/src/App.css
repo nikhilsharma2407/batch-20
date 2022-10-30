@@ -28,6 +28,16 @@
   color: #61dafb;
 }
 
+.spinner{
+  width: 100px !important;
+  height: 100px !important;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  z-index: 10;
+  font-size: 25px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

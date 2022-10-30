@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Button, Col } from 'react-bootstrap';
 import { useSelector,useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { addFriendUtil, removeFriendUtil } from '../apiUtil';
 import { addFriendAction, removeFriendAction } from '../reducers/userReducer';
 import './User.scss'
@@ -10,10 +10,11 @@ function User(props) {
     const dispatch = useDispatch();
     const { isLoggedIn, friendList } = useSelector(({ user }) => user);
     const navigate = useNavigate();
+    const {pathname} = useLocation();
 
     const addFriend = async (payload) => {
         if(!isLoggedIn){
-            navigate('/login');
+            navigate('/login',{state:pathname});
             return;
         }
         
@@ -21,8 +22,8 @@ function User(props) {
             const response = await (await addFriendUtil(payload)).data;
             console.log(response);
             if (response?.success) {
-                alert(response.message);
-                dispatch(addFriendAction(payload));
+                // payload = {...payload,message:response.message}
+                dispatch(addFriendAction({...payload,message:response.message}));
             }
         } catch (error) {
             console.error(error);
@@ -34,8 +35,8 @@ function User(props) {
             const response = await (await removeFriendUtil(payload)).data;
             console.log(response);
             if (response?.success) {
-                alert(response.message);
-                dispatch(removeFriendAction(payload));
+                // alert(response.message);
+                dispatch(removeFriendAction({...payload,message:response.message}));
             }
         } catch (error) {
             console.error(error);

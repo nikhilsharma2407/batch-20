@@ -18,27 +18,34 @@ import { loginWithTokenUtil } from './apiUtil';
 // Redux 
 
 import Counter from './Counter/Counter';
-import { useDispatch } from 'react-redux';
-import { loginAction } from './reducers/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction, loginWithTokenAction } from './reducers/userReducer';
+import Toast from './Toast';
+import { Spinner } from 'react-bootstrap';
 
 
 function App() {
   const [showComponent, setShowComponent] = useState(true);
   const dispatch = useDispatch();
+  const {loading} = useSelector(({user})=>user);
+
   useEffect(() => {
-    (async () => {
-      try {
-        const userData = await (await loginWithTokenUtil()).data;
-        console.log(userData);
-        if (userData) {
-          dispatch(loginAction(userData));
-          alert(`${userData.data.username} logged in successfully without credentials!!!`);
-          console.log(userData);
-          // localStorage.setItem('token',userData.data.token);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+    // (async () => {
+    //   try {
+    //     const userData = (await loginWithTokenUtil())?.data;
+    //     console.log(userData);
+    //     if (userData) {
+    //       dispatch(loginAction(userData));
+    //       alert(`${userData.data.username} logged in successfully without credentials!!!`);
+    //       console.log(userData);
+    //       // localStorage.setItem('token',userData.data.token);
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // })()
+    (async()=>{
+      dispatch(loginWithTokenAction())
     })()
   }, []);
 
@@ -52,6 +59,8 @@ function App() {
   return (
     <>
         <BrowserRouter>
+        {loading && <Spinner className ="spinner" animation="border" size='lg'/>}
+        <Toast/>
           <MyNavbar />
           {/* <div className='d-flex justify-content-around'>
       <Link to="/flex">Flexbox</Link>

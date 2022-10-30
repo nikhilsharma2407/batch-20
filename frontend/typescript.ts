@@ -181,10 +181,12 @@ const add = <T extends StrOrNum>(arg1:T,arg2:T):T=>{
 }
 
 add(1,2);
-add("1","2");
+add<number>(1,2);
+add<string>("1","2");
+
 add("1",false);
 
-add(1,'1');
+add<number>(1,'1');
 add("1",1);
 
 

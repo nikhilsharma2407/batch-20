@@ -1,28 +1,46 @@
 import { Button, Form, Container, Row, Col,Card } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react'
 import { loginUtil, loginWithTokenUtil, signupUtil } from '../apiUtil';
-import {useDispatch} from "react-redux";
-import { loginAction } from '../reducers/userReducer';
+import {useDispatch, useSelector} from "react-redux";
+import { errorAction, loginAction } from '../reducers/userReducer';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Login() {
+    const {isLoggedIn} = useSelector(state=>state.user);
 
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const dispatch = useDispatch();
 
+    const {state:prevPath} = useLocation()
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(isLoggedIn){
+            navigate(prevPath);
+        }
+    },[isLoggedIn])
+
+
+
+    // const login = async(e)=>{
+    //     const payload = {username,password};
+    //     try {
+    //         const userData  = await (await loginUtil(payload)).data;
+    //         console.log(userData);
+    //         if(userData){
+    //             dispatch(loginAction(userData));
+    //             // alert(`${userData.data.username} logged in successfully!!!` );
+    //             localStorage.setItem('token',userData.data.token);
+    //         } 
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
     const login = async(e)=>{
         const payload = {username,password};
-        try {
-            const userData  = await (await loginUtil(payload)).data;
-            console.log(userData);
-            if(userData){
-                dispatch(loginAction(userData));
-                // alert(`${userData.data.username} logged in successfully!!!` );
-                localStorage.setItem('token',userData.data.token);
-            } 
-        } catch (error) {
-            console.error(error);
-        }
+        dispatch(loginAction(payload));
+                // localStorage.setItem('token',userData.data.token);
     }
 
     return (
