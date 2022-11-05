@@ -1,5 +1,5 @@
 import axios from  "axios"
-const BASE_URL = "";
+const BASE_URL = "https://gfg-app.onrender.com/";
 
 const url = {
     LOGIN : "/user/login",

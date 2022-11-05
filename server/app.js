@@ -17,7 +17,7 @@ const port = process.env.PORT;
 
 const cors = require("cors");
 const corsOptions  = {
-    "origin":"http://localhost:3000",
+    "origin":"https://gfg-ui-uiuy.onrender.com",
     "methods": "GET,HEAD,PUT,PATCH,POST",
 }
 app.use(cors(corsOptions));
