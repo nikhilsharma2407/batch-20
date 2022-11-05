@@ -26,7 +26,7 @@ export const loadingAction = payload=>({type:ACTIONS.LOADING,payload})
 export const errorAction = payload=>({type:ACTIONS.ERROR,payload});
 export const resetMsgAction = ()=>({type:ACTIONS.RESET_MSG});
 
-const asyncAction = (api,action,apiPayload)=>{
+const asyncAction = (api,action,apiPayload,setToken = false)=>{
     return async(dispatch)=>{
         try {
             dispatch(loadingAction(true));
@@ -35,7 +35,7 @@ const asyncAction = (api,action,apiPayload)=>{
             const data = (await api(apiPayload)).data;
             if(data.success){
                 dispatch({...action,payload:data})
-                if(api.name ==="loginUtil"){
+                if(setToken){
                     localStorage.setItem('token',data.data.token);
                 }
             }
@@ -50,7 +50,7 @@ const asyncAction = (api,action,apiPayload)=>{
 
 export const loginAction = (apiPayload) => {
     const action =  { type: ACTIONS.LOGIN };
-    return asyncAction(loginUtil,action,apiPayload)
+    return asyncAction(loginUtil,action,apiPayload,true);
     
 };
 export const loginWithTokenAction =()=> {

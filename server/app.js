@@ -24,6 +24,7 @@ app.use(cors(corsOptions));
 // parsing the request body
 app.use(express.json());
 
+app.use(express.static('./build/'));
 app.use('/route',router);
 app.use('/user',userRouter);
 app.use('/admin',adminRouter);

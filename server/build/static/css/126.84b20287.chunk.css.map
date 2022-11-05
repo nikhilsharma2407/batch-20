@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/126.84b20287.chunk.css","mappings":"AAAA,MACI,4BAA6B,CADjC,eAIY,YAAa","sources":["User/User.scss"],"sourcesContent":[".user{\r\n    box-shadow: grey 8px 7px 15px;\r\n    &.card{\r\n        img{\r\n            height: 100px;\r\n        }\r\n    }\r\n}"],"names":[],"sourceRoot":""}
