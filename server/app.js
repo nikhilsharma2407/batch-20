@@ -13,7 +13,7 @@ const userRouter = require('./routes/userRouter');
 const adminRouter = require('./routes/adminRouter');
 const errLogger = require("./utils/errLogger")
 
-const port = 5000;
+const port = process.env.PORT;
 
 const cors = require("cors");
 const corsOptions  = {
