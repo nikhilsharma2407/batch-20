@@ -46,7 +46,7 @@ function User(props) {
     return <Col lg={4} md={6} sm={12} className="mb-3">
         <Card className='user'>
             <Card.Body className='d-flex justify-content-around'>
-                <img loading="lazy"  src={picture} alt="" />
+                <img src={picture} style={{objectFit:"cover"}} alt="..." loading="lazy" width="100px" height="100px"/>
                 <div>
                     <div className='mb-3'>{firstName} {lastName}</div>
                     {

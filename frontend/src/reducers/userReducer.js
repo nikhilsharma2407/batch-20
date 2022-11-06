@@ -90,7 +90,7 @@ export const userReducer = (state = initialState, action) => {
             var {id,message} = payload;
             return { ...state, friendList: state.friendList.filter(elem=> elem !== id),message }
         case ACTIONS.ERROR:
-            const {message:error} = payload.response.data;
+            const {message:error} = payload.response?.data;
             return {...state,error,message:''};
         case ACTIONS.RESET_MSG:
             return {...state, message:'',error:''};
